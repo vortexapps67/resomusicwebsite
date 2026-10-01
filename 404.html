@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track not found — Reso Music</title>
+<meta name="description" content="That page does not exist. Head back to Reso Music.">
+<meta name="theme-color" content="#0f0b08">
+<meta name="color-scheme" content="dark light">
+<meta name="robots" content="noindex, follow">
+
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('reso-theme');
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
+</head>
+
+<body>
+
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__blob aurora__blob--a"></span>
+  <span class="aurora__blob aurora__blob--b"></span>
+  <span class="aurora__blob aurora__blob--c"></span>
+</div>
+
+<header class="nav-shell">
+  <div class="shell">
+    <nav class="nav glass" data-nav aria-label="Main">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/icon-512.png" alt="" width="30" height="30">
+        <span>Reso <small>Music</small></span>
+      </a>
+
+      <div class="nav__links" id="nav-menu" data-nav-menu>
+        <a class="nav__link" href="index.html#features">Features</a>
+        <a class="nav__link" href="index.html#screens">Screens</a>
+        <a class="nav__link" href="index.html#developers">Developers</a>
+        <a class="nav__link" href="privacy.html">Privacy</a>
+      </div>
+
+      <div class="nav__actions">
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="true" aria-label="Switch appearance">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z"/>
+          </svg>
+        </button>
+        <a class="btn btn--primary" href="index.html">Back to home</a>
+        <button class="icon-btn nav__burger" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="shell nf">
+
+    <div class="stack" style="--flow:0">
+      <!-- the glass lens drifting across the numerals: same material,
+           used one last time as the explanation -->
+      <p class="nf__code"><span>404</span></p>
+
+      <div class="nf__body">
+        <p class="eyebrow">Track not found</p>
+        <h1 class="display h2" style="font-size:clamp(1.75rem,1.2rem+2.4vw,3rem)">
+          This one's not in the library.
+        </h1>
+        <p class="lede" style="text-align:center">
+          The page you asked for isn't here — the link may be old, or the address
+          mistyped. Nothing is broken on your side.
+        </p>
+
+        <div class="btn-row" style="justify-content:center;margin-top:0.5rem">
+          <a class="btn btn--primary" href="index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12H4.5M10.5 5.5 4 12l6.5 6.5"/></svg>
+            Back to Reso Music
+          </a>
+          <a class="btn btn--glass" href="index.html#screens">
+            See the screens
+          </a>
+        </div>
+
+        <p class="mono" style="margin-top:1rem">
+          Wrong link? Tell us —
+          <a href="mailto:hello@octadevs.fun" style="color:var(--accent-ink)">hello@octadevs.fun</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════ FOOTER ══ -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__row">
+      <a class="nav__brand" href="index.html" style="margin-right:0">
+        <img src="assets/icon-512.png" alt="" width="28" height="28">
+        <span>Reso <small>Music</small></span>
+      </a>
+      <p class="mono" style="max-width:34ch;text-align:right">
+        An offline player for the music you already own.<br>© <span data-year>2026</span> OCTA DEVS
+      </p>
+    </div>
+    <nav class="foot__legal" aria-label="Legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="https://octadevs.fun" target="_blank" rel="noopener noreferrer">OCTA DEVS</a>
+      <a href="mailto:hello@octadevs.fun">hello@octadevs.fun</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

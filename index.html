@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reso Music — Your music. Nothing else.</title>
+<meta name="description" content="Reso Music is an offline music player for the files already on your device. No streaming, no account, no ads, no internet required. Built by OCTA DEVS.">
+<meta name="theme-color" content="#0f0b08">
+<meta name="color-scheme" content="dark light">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reso Music — Your music. Nothing else.">
+<meta property="og:description" content="An offline music player for the files already on your device. No account. No ads. No internet required.">
+<meta property="og:image" content="assets/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script>
+  /* set appearance before first paint to avoid a flash */
+  (function () {
+    try {
+      var t = localStorage.getItem('reso-theme');
+      if (t !== 'light' && t !== 'dark') {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
+</head>
+
+<body>
+
+<!-- ambient light field: glass needs something rich to refract -->
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__blob aurora__blob--a"></span>
+  <span class="aurora__blob aurora__blob--b"></span>
+  <span class="aurora__blob aurora__blob--c"></span>
+</div>
+
+<a href="#main" class="mono" style="position:absolute;left:-9999px;top:0;z-index:200" onfocus="this.style.left='1rem';this.style.top='1rem';this.style.padding='.75rem 1rem';this.style.background='var(--bg)';this.style.borderRadius='12px';this.style.boxShadow='var(--shadow-3)'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- ══════════════════════════════════════════════════════ NAV ══ -->
+<header class="nav-shell">
+  <div class="shell">
+    <nav class="nav glass" data-nav aria-label="Main">
+      <a class="nav__brand" href="index.html">
+        <img src="assets/icon-512.png" alt="" width="30" height="30">
+        <span>Reso <small>Music</small></span>
+      </a>
+
+      <div class="nav__links" id="nav-menu" data-nav-menu>
+        <a class="nav__link" href="#features">Features</a>
+        <a class="nav__link" href="#screens">Screens</a>
+        <a class="nav__link" href="#how">How it works</a>
+        <a class="nav__link" href="#developers">Developers</a>
+      </div>
+
+      <div class="nav__actions">
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-pressed="true" aria-label="Switch appearance">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z"/>
+          </svg>
+        </button>
+
+        <a class="btn btn--primary" href="#get">
+          Get the app
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg>
+        </a>
+
+        <button class="icon-btn nav__burger" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ═════════════════════════════════════════════════════ HERO ══ -->
+  <section class="hero">
+    <div class="shell">
+      <div class="hero__grid">
+
+        <div class="hero__copy">
+          <p class="eyebrow" data-reveal>Offline music player</p>
+
+          <h1 class="display h1 hero__title" data-reveal style="--reveal-delay:80ms">
+            <span class="line">Your music.</span>
+            <span class="line accent">Nothing else.</span>
+          </h1>
+
+          <p class="lede" data-reveal style="--reveal-delay:160ms">
+            Reso Music plays the audio files already sitting on your device. No streaming
+            service, no account to create, no adverts between your albums. Works in
+            aeroplane mode, on a dead connection, on a plane.
+          </p>
+
+          <div class="btn-row" data-reveal style="--reveal-delay:240ms" id="get">
+            <a class="btn btn--primary" href="#get">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11M7.5 10 12 14.5 16.5 10M4.5 19.5h15"/></svg>
+              Download for free
+            </a>
+            <a class="btn btn--glass" href="#screens">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m10.5 9.8 4.2 2.2-4.2 2.2Z"/></svg>
+              See the screens
+            </a>
+          </div>
+
+          <ul class="hero__proof" data-reveal style="--reveal-delay:320ms">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>
+              No sign-up
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>
+              No ads, ever
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>
+              Nothing leaves your phone
+            </li>
+          </ul>
+
+          <p class="hero__note" data-reveal style="--reveal-delay:400ms">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5.2M12 7.9h.01"/></svg>
+            <span>iOS &amp; Android · Made by <a href="#developers" style="color:var(--accent-ink);font-weight:650">OCTA DEVS</a></span>
+          </p>
+        </div>
+
+        <!-- ─── device frame: honest screenshot slot ─── -->
+        <div class="hero__stage" data-reveal style="--reveal-delay:180ms">
+          <div class="device">
+            <span class="device__island" aria-hidden="true"></span>
+            <div class="device__screen">
+              <!--
+                ▼▼▼  SCREENSHOT SLOT 1 — hero
+                Drop your screenshot at:
+                assets/img/screenshots/01-now-playing.png
+                Recommended: 1170 × 2532 (9:19.5), portrait.
+                Until then the placeholder shows automatically.
+              ▼▼▼
+              -->
+              <figure class="shot">
+                <img src="assets/img/screenshots/01-now-playing.png" alt="Reso Music playing a track on the Now Playing screen" loading="eager" decoding="async" width="1170" height="2496">
+                <div class="shot__ph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.6h3"/></svg>
+                  <b>Screenshot slot</b>
+                  <span>01-now-playing.png — 9:19.5 portrait</span>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <!-- floating player: the product's signature interaction -->
+          <div class="player glass" aria-hidden="true">
+            <span class="player__art">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+            </span>
+            <span class="player__meta">
+              <b>Now Playing</b>
+              <span>your library · offline</span>
+            </span>
+            <span class="player__eq"><i></i><i></i><i></i><i></i></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ MARQUEE STRIP ══ -->
+  <div class="strip" aria-hidden="true">
+    <ul class="strip__track">
+      <li>Works offline</li><li>No account</li><li>No ads</li><li>No tracking</li>
+      <li>Local files only</li><li>Instant library</li><li>Background play</li><li>Open formats</li>
+      <li>Works offline</li><li>No account</li><li>No ads</li><li>No tracking</li>
+      <li>Local files only</li><li>Instant library</li><li>Background play</li><li>Open formats</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ FEATURES ══ -->
+  <section class="section" id="features">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow" data-reveal>Why Reso</p>
+        <h2 class="display h2" data-reveal style="--reveal-delay:60ms">A player that stays out of the way.</h2>
+        <p class="lede" data-reveal style="--reveal-delay:120ms">
+          Streaming apps turn listening into a subscription. Reso treats the music you
+          already own as the whole point.
+        </p>
+      </header>
+
+      <div class="cards">
+        <article class="card glass" data-reveal>
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.5a15 15 0 0 1 19 0M5.5 12a10.5 10.5 0 0 1 13 0M8.5 15.5a6 6 0 0 1 7 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/><path d="M2 2 22 22" opacity=".35"/></svg>
+          </span>
+          <h3 class="h3">Genuinely offline</h3>
+          <p>No connection required, at any point. No buffering, no reconnecting, no “this track is unavailable in your region”.</p>
+        </article>
+
+        <article class="card glass" data-reveal style="--reveal-delay:80ms">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 4.5 6v6.2c0 4.4 3.1 7.7 7.5 9 4.4-1.3 7.5-4.6 7.5-9V6Z"/><path d="m9.2 12 2 2 3.6-3.8"/></svg>
+          </span>
+          <h3 class="h3">Your files stay yours</h3>
+          <p>Audio is read from local storage and nowhere else. Nothing is uploaded, indexed on a server, or tied to an account.</p>
+        </article>
+
+        <article class="card glass" data-reveal style="--reveal-delay:160ms">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 4.5h15v15h-15z"/><path d="M4.5 9.5h15M9 4.5v15"/></svg>
+          </span>
+          <h3 class="h3">No account, ever</h3>
+          <p>Open the app and it plays. No email, no password, no social login, no verification step standing between you and your own music.</p>
+        </article>
+
+        <article class="card glass" data-reveal>
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9.5M9.3 20V4M14.7 20v-8.5M20 20V6.5"/></svg>
+          </span>
+          <h3 class="h3">Your library, instantly</h3>
+          <p>Everything on the device is indexed on first open. Search by title, artist or album and start playing in a tap.</p>
+        </article>
+
+        <article class="card glass" data-reveal style="--reveal-delay:80ms">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M10.2 9.2 15 12l-4.8 2.8Z"/></svg>
+          </span>
+          <h3 class="h3">Built for background</h3>
+          <p>Lock the screen, pocket the phone, keep listening. Playback is designed to survive the rest of your day.</p>
+        </article>
+
+        <article class="card glass" data-reveal style="--reveal-delay:160ms">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4.5h12v15H6z"/><path d="M6 9h12M10 6.5h4"/></svg>
+          </span>
+          <h3 class="h3">Ad-free, always</h3>
+          <p>No advertising SDKs, no sponsored playlists, no “recommended for you” rows. What you see is what you own.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ SHOWCASE 1 ══ -->
+  <section class="section section--tight" id="screens">
+    <div class="shell">
+      <div class="showcase">
+        <div class="stack" data-reveal style="--flow:1.25rem">
+          <p class="eyebrow">The library</p>
+          <h2 class="display h2">Everything you own, one search away.</h2>
+          <p class="lede">
+            Reso reads what is already on the device and lays it out the way a record
+            collection actually behaves — by album, by artist, by folder, or by the
+            play count you built up over years.
+          </p>
+          <a class="link-arrow" href="#get">
+            Get Reso Music
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5"/></svg>
+          </a>
+        </div>
+
+        <div class="showcase__shots">
+          <!-- ▼▼▼ SCREENSHOT SLOT 2 — library / albums -->
+          <figure class="shot-card glass" data-reveal>
+            <div class="shot">
+              <img src="assets/img/screenshots/02-library.png" alt="Reso Music library screen listing albums" loading="lazy" decoding="async" width="1170" height="2496">
+              <div class="shot__ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="7" height="7" rx="1.6"/><rect x="14" y="4.5" width="7" height="7" rx="1.6"/><rect x="3" y="15" width="7" height="7" rx="1.6"/><rect x="14" y="15" width="7" height="7" rx="1.6"/></svg>
+                <b>Slot 02</b>
+                <span>02-library.png</span>
+              </div>
+            </div>
+            <figcaption><b>Library</b>Albums, artists and folders from local storage.</figcaption>
+          </figure>
+
+          <!-- ▼▼▼ SCREENSHOT SLOT 3 — search / artist -->
+          <figure class="shot-card glass" data-reveal style="--reveal-delay:90ms">
+            <div class="shot">
+              <img src="assets/img/screenshots/03-search.png" alt="Reso Music search results grouped by artist" loading="lazy" decoding="async" width="1170" height="2496">
+              <div class="shot__ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4 4"/></svg>
+                <b>Slot 03</b>
+                <span>03-search.png</span>
+              </div>
+            </div>
+            <figcaption><b>Search</b>Find a track by title, artist or album.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ SHOWCASE 2 ══ -->
+  <section class="section section--tight">
+    <div class="shell">
+      <div class="showcase showcase--flip">
+        <div class="stack" data-reveal style="--flow:1.25rem">
+          <p class="eyebrow">Now playing</p>
+          <h2 class="display h2">The screen you actually look at.</h2>
+          <p class="lede">
+            Artwork, a scrubber you can feel your way across, and controls placed where
+            your thumb already is. The player stays legible in daylight and dimmed at
+            3am without being adjusted.
+          </p>
+          <ul class="hero__proof" style="padding-top:0">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>Light &amp; dark</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>Queue &amp; repeat</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6.5 9.5 17 4 11.5"/></svg>Gapless playback</li>
+          </ul>
+        </div>
+
+        <div class="showcase__shots">
+          <!-- ▼▼▼ SCREENSHOT SLOT 4 — now playing full -->
+          <figure class="shot-card glass" data-reveal>
+            <div class="shot">
+              <img src="assets/img/screenshots/04-now-playing-full.png" alt="Reso Music full Now Playing screen with album artwork" loading="lazy" decoding="async" width="1170" height="2496">
+              <div class="shot__ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3"/></svg>
+                <b>Slot 04</b>
+                <span>04-now-playing-full.png</span>
+              </div>
+            </div>
+            <figcaption><b>Now playing</b>Artwork, scrubber, queue and playback controls.</figcaption>
+          </figure>
+
+          <!-- ▼▼▼ SCREENSHOT SLOT 5 — queue -->
+          <figure class="shot-card glass" data-reveal style="--reveal-delay:90ms">
+            <div class="shot">
+              <img src="assets/img/screenshots/05-queue.png" alt="Reso Music up next queue screen" loading="lazy" decoding="async" width="1170" height="2496">
+              <div class="shot__ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h11M4 12h16M4 17h9"/><path d="m17.5 5 3 3-3 3" opacity=".5"/></svg>
+                <b>Slot 05</b>
+                <span>05-queue.png</span>
+              </div>
+            </div>
+            <figcaption><b>Queue</b>Reorder, repeat and shuffle what plays next.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ HOW IT WORKS ══ -->
+  <section class="section" id="how">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow" data-reveal>Getting started</p>
+        <h2 class="display h2" data-reveal style="--reveal-delay:60ms">Three steps, then it just plays.</h2>
+      </header>
+
+      <div class="steps">
+        <article class="step glass" data-reveal>
+          <span class="step__n">01</span>
+          <h3 class="h3">Put your music on the device</h3>
+          <p>Copy your files across however you like — USB, file share, or your existing backup. Reso does not need them from anywhere else.</p>
+        </article>
+        <article class="step glass" data-reveal style="--reveal-delay:90ms">
+          <span class="step__n">02</span>
+          <h3 class="h3">Open Reso</h3>
+          <p>Your library is indexed from local storage the first time you open it. Nothing is uploaded, because there is nowhere to upload it to.</p>
+        </article>
+        <article class="step glass" data-reveal style="--reveal-delay:180ms">
+          <span class="step__n">03</span>
+          <h3 class="h3">Go offline</h3>
+          <p>Turn on aeroplane mode and keep listening. That is the whole promise, and it is the feature the app is built around.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ THE SIGNATURE: BIG "RESO" ══ -->
+  <section class="reso-band" aria-label="Reso">
+    <canvas class="reso-band__wave" data-spectrum aria-hidden="true"></canvas>
+    <h2 class="reso-band__word" aria-hidden="true">RESO</h2>
+    <p class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Reso</p>
+
+    <!-- drifting glass bars: watch the letters refract behind them -->
+    <div class="reso-band__bars" aria-hidden="true">
+      <span class="reso-bar"></span>
+      <span class="reso-bar"></span>
+      <span class="reso-bar"></span>
+    </div>
+
+    <div class="reso-band__tag shell">
+      <p class="mono">Reso Music · v1.0 · offline by design</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="#get">Download</a>
+        <a class="btn btn--glass" href="privacy.html">Privacy</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════ DEVELOPERS ══ -->
+  <section class="section section--tight" id="developers">
+    <div class="shell">
+      <div class="octa glass" data-reveal>
+        <div class="stack" style="--flow:0.9rem">
+          <p class="eyebrow">Developers</p>
+          <h2 class="display h2" style="font-size:clamp(1.75rem,1.2rem+2.2vw,2.75rem)">Built by OCTA DEVS.</h2>
+          <p class="lede" style="font-size:1rem">
+            Reso Music is developed and published by OCTA DEVS. Bug reports, feature
+            requests and business enquiries — the inbox is open.
+          </p>
+        </div>
+
+        <div class="octa__id">
+          <span class="octa__mark">
+            <img src="assets/octa-logo.png" alt="OCTA DEVS logo" width="58" height="58" loading="lazy" decoding="async">
+          </span>
+          <div class="stack" style="--flow:0.35rem">
+            <strong style="font-family:var(--f-display);font-size:1.0625rem;letter-spacing:-0.02em">OCTA DEVS</strong>
+            <span class="mono">octadevs.fun</span>
+          </div>
+        </div>
+
+        <nav class="octa__links" aria-label="Developer links" style="grid-column:1/-1">
+          <a class="octa__link" href="https://octadevs.fun" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+            octadevs.fun
+          </a>
+          <a class="octa__link" href="https://instagram.com/octadevsofficial" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+            @octadevsofficial
+          </a>
+          <a class="octa__link" href="mailto:hello@octadevs.fun">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.8" y="5" width="18.4" height="14" rx="2.6"/><path d="m3.4 6.6 8.6 6 8.6-6"/></svg>
+            hello@octadevs.fun
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════ FOOTER ══ -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__row">
+      <a class="nav__brand" href="index.html" style="margin-right:0">
+        <img src="assets/icon-512.png" alt="" width="28" height="28">
+        <span>Reso <small>Music</small></span>
+      </a>
+      <p class="mono" style="max-width:34ch;text-align:right">
+        An offline player for the music you already own.<br>© <span data-year>2026</span> OCTA DEVS
+      </p>
+    </div>
+
+    <nav class="foot__legal" aria-label="Legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="https://octadevs.fun" target="_blank" rel="noopener noreferrer">OCTA DEVS</a>
+      <a href="mailto:hello@octadevs.fun">hello@octadevs.fun</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
