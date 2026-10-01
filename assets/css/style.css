@@ -5,6 +5,13 @@
    Material: Liquid Glass (translucent floating layer over rich content)
    Register: warm amber / gold, "audiophile" premium
 
+   THE ONE RULE THAT HOLDS IT TOGETHER
+     Glass is expensive. Spend it on the FLOATING FUNCTIONAL LAYER only: the
+     nav, the player, the download buttons, the OCTA panel. Everything that is
+     merely content (features, steps) sits on type and hairlines with no card
+     chrome at all. When every section is glass, glass stops reading as a
+     material and starts reading as a border.
+
    HOW TO RETUNE (edit only the values in this block)
      --accent-h ... hue of the amber family (try 32 amber, 210 ice, 265 violet)
      --glass-blur / --glass-sat ... material intensity
@@ -52,8 +59,32 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Render the variable font's real cuts. Without these the browser
+     synthesises a bold that is a smear of the true 700, and the display
+     face loses the crispness the whole register depends on. */
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  font-synthesis-weight: none;
   /* no overflow-x here on purpose — it lives on <html> as `clip`.
      See the note in the reset block above. */
+}
+
+/* ------------------------------------------------------------- 1a. GRAIN
+   A single fixed film over the whole viewport. The aurora already carries
+   grain to stop its gradients banding, but that layer sits BEHIND every
+   pixel of content and is therefore invisible where it matters. This one
+   rides on top, so type and glass both get the printed-stock tooth that
+   separates a real brand site from a gradient demo.
+   `mix-blend-mode: soft-light` keeps it a modulation of whatever is beneath
+   rather than a wash of grey over the whole page. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: var(--grain-a);
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 img, svg, video, canvas { display: block; max-width: 100%; }
@@ -118,8 +149,8 @@ ul, ol { list-style: none; padding: 0; }
   --r-lg: 28px; --r-xl: 38px; --r-pill: 999px;
 
   /* -- 2f. TYPE -------------------------------------------------------- */
-  --f-display: "Bricolage Grotesque", "Bricolage Grotesque Placeholder", Georgia, serif;
-  --f-body: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --f-body: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
 
   /* -- 2g. MOTION ------------------------------------------------------ */
@@ -157,6 +188,12 @@ ul, ol { list-style: none; padding: 0; }
   --glass-edge: rgb(255 255 255 / 0.85);
   --glass-sheen: rgb(255 255 255 / 0.9);
   --glass-under: rgb(120 90 50 / 0.12);
+  /* the rim: a gradient hairline, bright where the light lands and dark where
+     it falls away. A flat 1px border is what makes glass read as a div. */
+  --glass-rim-1: rgb(255 255 255 / 0.95);
+  --glass-rim-2: rgb(255 255 255 / 0.16);
+  --glass-rim-3: rgb(120 90 50 / 0.22);
+  --grain-a: 0.038;
 
   /* aurora â€” the rich content the glass needs to refract */
   --aurora-a: oklch(88% 0.13 78 / 0.85);
@@ -191,6 +228,10 @@ ul, ol { list-style: none; padding: 0; }
   --glass-edge: rgb(255 236 210 / 0.14);
   --glass-sheen: rgb(255 240 220 / 0.22);
   --glass-under: rgb(0 0 0 / 0.3);
+  --glass-rim-1: rgb(255 240 220 / 0.34);
+  --glass-rim-2: rgb(255 240 220 / 0.05);
+  --glass-rim-3: rgb(0 0 0 / 0.45);
+  --grain-a: 0.055;
 
   --aurora-a: oklch(62% 0.17 48 / 0.5);
   --aurora-b: oklch(52% 0.14 28 / 0.42);
@@ -247,11 +288,11 @@ ul, ol { list-style: none; padding: 0; }
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
-    165deg,
-    var(--glass-edge) 0%,
-    transparent 42%,
-    transparent 62%,
-    var(--glass-under) 100%
+    155deg,
+    var(--glass-rim-1) 0%,
+    var(--glass-rim-2) 34%,
+    var(--glass-rim-3) 72%,
+    var(--glass-rim-2) 100%
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -279,36 +320,63 @@ ul, ol { list-style: none; padding: 0; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
+  gap: 0.6rem;
   font-family: var(--f-mono);
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent-ink);
 }
+/* A dot, not a dash. Five identical 1.75rem rules marching down the page is
+   one of the loudest tells of a generated layout; punctuation reads as a
+   considered label instead. */
 .eyebrow::before {
   content: "";
-  width: 1.75rem;
-  height: 1px;
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
   background: currentColor;
-  opacity: 0.5;
+  box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 16%, transparent);
 }
 
+/* Instrument Serif ships weight 400 and NOTHING else - no variable weight
+   axis, no bold. Every serif rule in this file therefore states 400
+   explicitly. Because <body> sets font-synthesis-weight:none, a stray 700
+   here does not render as a bold heading, it renders as a silently thin one,
+   which is the hardest kind of bug to notice. */
 .display {
   font-family: var(--f-display);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
+  font-weight: 400;
+  /* A face with real ascenders, bracketed serifs and a tall x-height needs
+     air. The 0.95 the old grotesk wanted would collide the brackets. */
+  line-height: 1.06;
+  /* Serifs cannot take the tracking a grotesk can. At -0.04em the serifs on
+     neighbouring capitals overlap and the wordmark turns to mush; -0.012em
+     is about the most this face tolerates at display size. */
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
-.h1 { font-size: clamp(2.85rem, 1.2rem + 7.2vw, 6rem); }
-.h2 { font-size: clamp(2rem, 1.1rem + 3.6vw, 3.5rem); }
-.h3 { font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.625rem); line-height: 1.2; letter-spacing: -0.02em; }
+/* Instrument Serif reads small next to a grotesk of the same px size, so the
+   display steps are sized up and the sans sub-heading steps down. */
+.h1 { font-size: clamp(2.9rem, 1rem + 9.5vw, 6.9rem); }
+/* The desktop hero splits 1.05fr / 0.95fr, so the headline is boxed into
+   about 47% of the shell. "Nothing else." measures 4.219em wide in Instrument
+   Serif, so the full-width mobile size would wrap it onto a second line from
+   62rem up. This value is derived from that measurement, not guessed: it
+   lands the headline at 79-84% of its column across the desktop range. */
+@media (min-width: 62rem) {
+  .h1 { font-size: clamp(3rem, 1.1rem + 6.9vw, 6.9rem); }
+}
+.h2 { font-size: clamp(2.35rem, 1.2rem + 4.6vw, 4.4rem); }
+.h3 { font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.5rem); line-height: 1.3; letter-spacing: -0.014em; }
 
 .lede {
   font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);
+  line-height: 1.6;
+  letter-spacing: -0.006em;
   color: var(--muted);
   max-width: var(--measure);
   text-wrap: pretty;
@@ -388,6 +456,9 @@ ul, ol { list-style: none; padding: 0; }
 .btn {
   --btn-bg: transparent;
   --btn-fg: var(--text);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -409,6 +480,21 @@ ul, ol { list-style: none; padding: 0; }
     background-color var(--t-fast) var(--ease-out),
     opacity var(--t-fast) linear;
 }
+/* one pass of specular light across the label. At z-index -1 inside the
+   isolated button it sits above the fill and below the text, so the label
+   stays crisp while the surface underneath catches the highlight. */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(104deg, transparent 34%, rgb(255 255 255 / 0.4) 50%, transparent 66%);
+  transform: translateX(-115%);
+  transition: transform var(--t-slow) var(--ease-out);
+}
+.btn:hover::after { transform: translateX(115%); }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(0.985); }
 .btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
@@ -491,9 +577,9 @@ ul, ol { list-style: none; padding: 0; }
   gap: 0.6rem;
   padding-block: 0.4rem;
   font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: 1.3rem;
+  letter-spacing: -0.005em;
   margin-right: auto;
 }
 .nav__brand img {
@@ -827,37 +913,82 @@ ul, ol { list-style: none; padding: 0; }
 }
 @keyframes slide { to { transform: translateX(-50%); } }
 
-/* ------------------------------------------------------- 10. FEATURE GRID */
-.cards {
-  display: grid;
-  gap: var(--s-4);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-}
-.card {
-  position: relative;
-  padding: clamp(1.4rem, 2.5vw, 1.9rem);
-  border-radius: var(--r-lg);
-  display: grid;
-  gap: 0.7rem;
-  align-content: start;
-  transition: transform var(--t-mid) var(--ease-out), box-shadow var(--t-mid) var(--ease-out);
-}
-.card:hover { transform: translateY(-3px); }
-.card:hover { box-shadow: inset 0 1px 0 0 var(--glass-sheen), inset 0 0 0 1px var(--glass-edge), var(--shadow-3); }
-.card__icon {
-  display: grid;
-  place-items: center;
-  width: 44px; height: 44px;
-  border-radius: var(--r-sm);
-  background: var(--accent-soft);
-  color: var(--accent-ink);
-  margin-bottom: 0.35rem;
-}
-.card__icon svg { width: 21px; height: 21px; }
-.card p { font-size: 0.9375rem; color: var(--muted); text-wrap: pretty; }
+/* --------------------------------------------- 10. CAPABILITY LEDGER
+   Six identical glass cards was the loudest generated-layout tell on the
+   page, and it spent the expensive material on content that never needed
+   it. This is the same information set as a spec sheet: a sticky editorial
+   column, hairline rules, mono indices, the display face carrying the
+   hierarchy, and an amber rule that draws itself under the hovered row.
+   No card, no icon chip, no backdrop-filter. */
 
-.card--wide { grid-column: span 2; }
-@media (max-width: 44rem) { .card--wide { grid-column: span 1; } }
+.split {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 62rem) {
+  .split {
+    grid-template-columns: minmax(0, 23rem) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 5.5rem);
+  }
+  /* the head stays put while the ledger scrolls past it */
+  .split__head { position: sticky; top: calc(var(--scroll-pad) + 0.5rem); }
+}
+.split__head { display: grid; gap: var(--s-4); justify-items: start; }
+/* A display heading sized for the full shell would wrap to five lines inside
+   a 23rem sticky column. The narrow column gets its own step. */
+.split__head .h2 { font-size: clamp(1.95rem, 1.2rem + 2vw, 2.85rem); }
+
+.ledger { border-top: 1px solid var(--hairline); }
+.ledger__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0 1.25rem;
+  padding-block: clamp(1.35rem, 2.3vw, 1.85rem);
+  border-bottom: 1px solid var(--hairline);
+}
+/* the amber rule, drawn from the left on hover */
+.ledger__row::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--accent) 30%, transparent));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--t-mid) var(--ease-out);
+}
+.ledger__row:hover::after { transform: scaleX(1); }
+
+.ledger__n {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 0.45em;
+  transition: color var(--t-mid) var(--ease-out);
+}
+.ledger__row:hover .ledger__n { color: var(--accent-ink); }
+
+.ledger__row h3 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 1.05rem + 1.1vw, 1.95rem);
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  transition: color var(--t-mid) var(--ease-out);
+}
+.ledger__row:hover h3 { color: var(--accent-ink); }
+.ledger__row p {
+  margin-top: 0.45rem;
+  max-width: 56ch;
+  font-size: 0.9375rem;
+  line-height: 1.62;
+  color: var(--muted);
+  text-wrap: pretty;
+}
 
 /* --------------------------------------------------------- 11. SHOWCASE */
 .showcase {
@@ -892,38 +1023,66 @@ ul, ol { list-style: none; padding: 0; }
 }
 .shot-card figcaption b { color: var(--text); font-weight: 650; display: block; }
 
-/* ------------------------------------------------------------ 12. STEPS */
+/* --------------------------------------------------------- 12. TIMELINE
+   Three glass cards said "here are three steps". A spine with three nodes on
+   it says the same thing and looks like somebody chose it. The hairline runs
+   behind the nodes and stops short at both ends so it never reads as a rule
+   that failed to reach the margin. */
+
 .steps {
+  position: relative;
   display: grid;
-  gap: var(--s-4);
-  counter-reset: step;
+  gap: clamp(1.75rem, 3.5vw, 2.5rem);
 }
-@media (min-width: 52rem) { .steps { grid-template-columns: repeat(3, 1fr); } }
+/* vertical spine, mobile */
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 5px; bottom: 5px; left: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--hairline) 0%, var(--hairline) 78%, transparent);
+}
+
 .step {
-  padding: clamp(1.3rem, 2.2vw, 1.75rem);
-  border-radius: var(--r-lg);
+  position: relative;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.5rem;
   align-content: start;
+  padding-left: 1.6rem;
 }
+/* the node sitting on the spine */
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0.35rem; left: 0;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 0 5px color-mix(in oklab, var(--accent) 13%, transparent);
+}
+
+@media (min-width: 54rem) {
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  /* horizontal spine, desktop */
+  .steps::before {
+    top: 5px; bottom: auto; left: 0; right: 0;
+    width: auto; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hairline) 6%, var(--hairline) 94%, transparent);
+  }
+  .step { padding-left: 0; padding-top: 1.85rem; }
+  .step::before { top: 1px; left: 0; }
+}
+
 .step__n {
   font-family: var(--f-mono);
   font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--accent-ink);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
-.step__n::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, currentColor, transparent);
-  opacity: 0.35;
-}
-.step p { font-size: 0.9375rem; color: var(--muted); text-wrap: pretty; }
+.step p { font-size: 0.9375rem; line-height: 1.62; color: var(--muted); text-wrap: pretty; }
 
 /* ------------------------------------------ 13. THE SIGNATURE: BIG "RESO"
    The wordmark is the demo. Glass bars drift across it so you watch the
@@ -947,10 +1106,21 @@ ul, ol { list-style: none; padding: 0; }
   position: relative;
   margin: 0;
   font-family: var(--f-display);
-  font-weight: 800;
-  font-size: clamp(5rem, 25vw, 22rem);
-  line-height: 0.78;
-  letter-spacing: -0.055em;
+  font-weight: 400;
+  /* Instrument Serif sets "RESO" in just 1.82em, roughly a third narrower
+     than the grotesk this replaced, so the vw coefficient is much larger to
+     land the same optical fill: 45vw puts the wordmark at ~83% of the band.
+     The 44rem ceiling keeps the band from becoming a full screen of letters
+     on wide monitors. Measured, not eyeballed. */
+  font-size: clamp(3rem, 45vw, 44rem);
+  /* 400 at this size is a magazine masthead, not a weak headline: the
+     bracketed serifs and the high stroke contrast carry the mass, and the
+     drifting glass bars read far better against a high-contrast face than
+     they would against a slab of 800-weight grotesque. */
+  line-height: 1;
+  /* A third of the tracking the grotesk used. Any tighter and the serifs on
+     R-E-S-O collide before the counters close up. */
+  letter-spacing: -0.02em;
   text-align: center;
   white-space: nowrap;
   user-select: none;
@@ -1051,9 +1221,18 @@ ul, ol { list-style: none; padding: 0; }
 
 /* ----------------------------------------------------------- 15. FOOTER */
 .foot {
-  border-top: 1px solid var(--hairline);
+  position: relative;
   padding-block: var(--s-6) var(--s-7);
   margin-top: clamp(3rem, 7vw, 5rem);
+}
+/* a hairline that fades out at both ends, rather than a rule that chops the
+   page in half at full strength */
+.foot::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline) 16%, var(--hairline) 84%, transparent);
 }
 .foot__row {
   display: flex;
@@ -1128,11 +1307,11 @@ ul, ol { list-style: none; padding: 0; }
 .prose > * + * { margin-top: 1.1em; }
 .prose h2 {
   font-family: var(--f-display);
-  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  margin-top: 2.4em;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.15rem);
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  margin-top: 2.2em;
   scroll-margin-top: 6rem;
   text-wrap: balance;
 }
@@ -1181,10 +1360,10 @@ ul, ol { list-style: none; padding: 0; }
 .nf__code {
   position: relative;
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(6rem, 26vw, 17rem);
-  line-height: 0.82;
-  letter-spacing: -0.06em;
+  line-height: 1;
+  letter-spacing: -0.02em;
   background: linear-gradient(172deg, var(--wordmark-1) 10%, var(--wordmark-2) 98%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -1239,7 +1418,7 @@ ul, ol { list-style: none; padding: 0; }
 
 /* Reduce Transparency â†’ opaque fallback, material disappears but hierarchy stays */
 @media (prefers-reduced-transparency: reduce) {
-  .glass, .btn--glass, .player, .octa__link, .nav, .card, .step, .shot-card, .toc,
+  .glass, .btn--glass, .player, .octa__link, .nav, .shot-card, .toc,
   .reso-bar, .nf__code::after {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
@@ -1255,15 +1434,15 @@ ul, ol { list-style: none; padding: 0; }
 }
 
 @media (prefers-contrast: more) {
-  :root { --hairline: currentColor; }
-  .glass, .nav, .card, .step, .shot-card, .toc, .btn--glass, .player, .octa__link {
+  :root { --hairline: currentColor; --grain-a: 0; }
+  .glass, .nav, .shot-card, .toc, .btn--glass, .player, .octa__link {
     box-shadow: inset 0 0 0 1px var(--muted), var(--shadow-1) !important;
   }
-  .lede, .card p, .step p, .prose p { color: var(--text); }
+  .lede, .ledger__row p, .step p, .prose p { color: var(--text); }
 }
 
 @media print {
-  .aurora, .nav-shell, .reso-band__bars, .strip { display: none !important; }
+  .aurora, .grain, .nav-shell, .reso-band__bars, .strip { display: none !important; }
   body { background: #fff; color: #000; }
-  .glass, .card, .step, .toc { box-shadow: none; background: #fff; }
+  .glass, .toc { box-shadow: none; background: #fff; }
 }
